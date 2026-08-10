@@ -21,10 +21,10 @@ function pngSize(buf) {
 
 test('manifest: PNGアイコン3種(192/512/maskable)が宣言されている', () => {
   const srcs = manifest.icons.map((i) => i.src);
-  assert.ok(srcs.includes('icons/icon-192.png'));
-  assert.ok(srcs.includes('icons/icon-512.png'));
-  assert.ok(srcs.includes('icons/icon-maskable-512.png'));
-  const maskable = manifest.icons.find((i) => i.src === 'icons/icon-maskable-512.png');
+  assert.ok(srcs.includes('icons/app-icon-192.png'));
+  assert.ok(srcs.includes('icons/app-icon-512.png'));
+  assert.ok(srcs.includes('icons/app-icon-maskable-512.png'));
+  const maskable = manifest.icons.find((i) => i.src === 'icons/app-icon-maskable-512.png');
   assert.equal(maskable.purpose, 'maskable');
 });
 
