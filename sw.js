@@ -1,4 +1,4 @@
-const CACHE_NAME = 'exercise-app-v2';
+const CACHE_NAME = 'exercise-app-v3'; // manifest変更をスマホに確実に届けるためキャッシュ更新
 const ASSETS = [
   './',
   './index.html',

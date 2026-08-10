@@ -2,8 +2,6 @@
   "name": "運動管理",
   "short_name": "運動管理",
   "start_url": "./index.html",
-  "scope": "./",
-  "id": "./",
   "display": "standalone",
   "background_color": "#eef1f4",
   "theme_color": "#e8590c",
