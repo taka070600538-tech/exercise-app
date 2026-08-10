@@ -51,8 +51,3 @@ export function isEmptyRecord(record) {
     j.startTime, j.weather, j.distanceKm, j.durationMin, g.leftKg, g.rightKg];
   return fields.every((v) => v === null) && record.memo === '';
 }
-
-export function copyRecordTo(source, targetDate, now = new Date()) {
-  const { date: _date, updatedAt: _updatedAt, ...rest } = source;
-  return { ...JSON.parse(JSON.stringify(rest)), date: targetDate, updatedAt: now.toISOString() };
-}

@@ -1,10 +1,11 @@
-const CACHE_NAME = 'exercise-app-v1';
+const CACHE_NAME = 'exercise-app-v2';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './manifest.json',
   './js/app.js',
+  './js/timeline.js',
   './js/db.js',
   './js/record.js',
   './js/form.js',

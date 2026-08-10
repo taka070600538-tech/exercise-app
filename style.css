@@ -29,7 +29,7 @@ body {
 main {
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 12px 48px;
+  padding: 0 12px 88px; /* 下部ナビの高さぶん余白を確保 */
 }
 
 /* ---- ヘッダー ---- */
@@ -96,60 +96,89 @@ main {
   background: #fff;
 }
 
-/* ---- 別の日からコピー ---- */
-.copy-section { margin-bottom: 16px; }
+.hidden { display: none; }
 
-#copy-toggle {
-  width: 100%;
-  height: 44px;
-  border: 1px dashed var(--ink-soft);
-  border-radius: 10px;
-  background: transparent;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-  cursor: pointer;
+/* ---- 下部ナビゲーション(タブ) ---- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: var(--ink);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  gap: 6px;
+  z-index: 10;
 }
 
-.copy-panel {
-  margin-top: 8px;
-  padding: 12px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-}
-
-.copy-panel label {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-
-.copy-controls { display: flex; gap: 8px; }
-
-.copy-controls input[type="date"] {
+.nav-btn {
   flex: 1;
-  height: 48px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 0 10px;
-  font-size: 1rem;
-}
-
-#copy-run {
-  flex: 0 0 auto;
-  padding: 0 16px;
-  height: 48px;
+  height: 46px;
   border: none;
   border-radius: 10px;
-  background: var(--vermilion);
-  color: #fff;
-  font-weight: 700;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
   font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   cursor: pointer;
 }
 
-.hidden { display: none; }
+.nav-btn.is-active {
+  background: var(--vermilion);
+  color: #fff;
+}
+
+/* ---- 時系列テーブル ---- */
+.timeline-scroll {
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.timeline-table {
+  border-collapse: collapse;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+}
+
+.timeline-table th,
+.timeline-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+}
+
+.timeline-table th:first-child,
+.timeline-table td:first-child {
+  text-align: left;
+  font-weight: 700;
+  position: sticky;
+  left: 0;
+  background: var(--card);
+}
+
+.timeline-table th {
+  background: var(--road);
+  color: var(--ink-soft);
+  font-weight: 700;
+  text-align: right;
+  position: sticky;
+  top: 0;
+}
+
+.timeline-table th:first-child { background: var(--road); }
+
+.timeline-table td:last-child { text-align: left; }
+
+.timeline-empty {
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 24px 0;
+}
 
 /* ---- カード(レーンストライプ) ---- */
 .card {

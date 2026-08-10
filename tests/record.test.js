@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { emptyRecord, buildRecord, toNumberOrNull, pushupTotal, isEmptyRecord, copyRecordTo } from '../js/record.js';
+import { emptyRecord, buildRecord, toNumberOrNull, pushupTotal, isEmptyRecord } from '../js/record.js';
 
 test('toNumberOrNull: 空・負数・非数はnull、数値文字列は数値', () => {
   assert.equal(toNumberOrNull(''), null);
@@ -43,15 +43,4 @@ test('isEmptyRecord: 全項目未入力のときだけtrue', () => {
   assert.ok(isEmptyRecord(emptyRecord('2026-08-10')));
   assert.ok(!isEmptyRecord(buildRecord('2026-08-10', { situps: '1' })));
   assert.ok(!isEmptyRecord(buildRecord('2026-08-10', { memo: 'メモだけ' })));
-});
-
-test('copyRecordTo: 内容を引き継ぎdate/updatedAtは新しくする', () => {
-  const src = buildRecord('2026-08-09', { situps: '30' }, new Date('2026-08-09T08:00:00'));
-  const now = new Date('2026-08-10T07:00:00');
-  const copied = copyRecordTo(src, '2026-08-10', now);
-  assert.equal(copied.date, '2026-08-10');
-  assert.equal(copied.strength.situps, 30);
-  assert.equal(copied.updatedAt, now.toISOString());
-  copied.strength.situps = 99; // ディープコピーであること
-  assert.equal(src.strength.situps, 30);
 });

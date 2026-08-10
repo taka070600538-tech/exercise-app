@@ -24,17 +24,7 @@
   </header>
 
   <main>
-    <section class="copy-section">
-      <button id="copy-toggle" type="button">別の日からコピー</button>
-      <div id="copy-panel" class="copy-panel hidden">
-        <label for="copy-source-date">コピー元の日付</label>
-        <div class="copy-controls">
-          <input type="date" id="copy-source-date">
-          <button id="copy-run" type="button">コピー実行</button>
-        </div>
-      </div>
-    </section>
-
+    <section class="view" id="view-record">
     <form id="record-form" autocomplete="off">
       <section class="card card-strength">
         <h2>基本の筋力トレーニング<span class="unit-note">回数</span></h2>
@@ -106,17 +96,30 @@
         <textarea id="memo" rows="4" placeholder="体調や気づいたことなど"></textarea>
       </section>
     </form>
+    </section>
 
-    <section class="card card-settings">
-      <h2>設定</h2>
-      <div id="sync-settings">
-        <p class="settings-note">バックアップ機能の読み込み中です(オフライン時は利用できません)。</p>
-      </div>
-      <div class="app-url-row">
-        <button id="copy-app-url" type="button">アプリのURLをコピー</button>
-      </div>
+    <section class="view hidden" id="view-timeline">
+      <div id="timeline-container"></div>
+    </section>
+
+    <section class="view hidden" id="view-settings">
+      <section class="card card-settings">
+        <h2>設定</h2>
+        <div id="sync-settings">
+          <p class="settings-note">バックアップ機能の読み込み中です(オフライン時は利用できません)。</p>
+        </div>
+        <div class="app-url-row">
+          <button id="copy-app-url" type="button">アプリのURLをコピー</button>
+        </div>
+      </section>
     </section>
   </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn is-active" data-view="record" type="button">記録</button>
+    <button class="nav-btn" data-view="timeline" type="button">時系列</button>
+    <button class="nav-btn" data-view="settings" type="button">設定</button>
+  </nav>
 
   <script type="module" src="js/app.js"></script>
 </body>

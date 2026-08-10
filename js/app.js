@@ -1,5 +1,6 @@
 import { openDB, getRecord, putRecord, deleteRecord } from './db.js';
-import { emptyRecord, buildRecord, isEmptyRecord, copyRecordTo } from './record.js';
+import { emptyRecord, buildRecord, isEmptyRecord } from './record.js';
+import { renderTimeline } from './timeline.js';
 import { readFormValues, fillForm, bindFormChange } from './form.js';
 import { formatDate, shiftDate } from './dateUtils.js';
 import { collectBackup, restoreBackup } from './backup.js';
@@ -45,22 +46,25 @@ function bindDateNav() {
   });
 }
 
-function bindCopyFromDate() {
-  document.getElementById('copy-toggle').addEventListener('click', () => {
-    document.getElementById('copy-panel').classList.toggle('hidden');
-  });
-  document.getElementById('copy-run').addEventListener('click', async () => {
-    const sourceDate = document.getElementById('copy-source-date').value;
-    if (!sourceDate) { alert('コピー元の日付を選んでください。'); return; }
-    const source = await getRecord(state.db, sourceDate);
-    if (!source) { alert(`${sourceDate}の記録がありません。`); return; }
-    const current = buildRecord(state.date, readFormValues());
-    if (!isEmptyRecord(current) && !confirm(`${state.date}の入力内容を${sourceDate}の記録で上書きします。よろしいですか?`)) return;
-    const copied = copyRecordTo(source, state.date);
-    await putRecord(state.db, copied);
-    fillForm(copied);
-    setStatus('保存済み');
-    document.getElementById('copy-panel').classList.add('hidden');
+function switchView(viewName) {
+  for (const view of document.querySelectorAll('.view')) {
+    view.classList.toggle('hidden', view.id !== `view-${viewName}`);
+  }
+  for (const btn of document.querySelectorAll('.nav-btn')) {
+    btn.classList.toggle('is-active', btn.dataset.view === viewName);
+  }
+  const inRecord = viewName === 'record';
+  document.querySelector('.date-nav').classList.toggle('hidden', !inRecord);
+  document.getElementById('save-status').classList.toggle('hidden', !inRecord);
+}
+
+function bindNav() {
+  document.querySelectorAll('.nav-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const view = btn.dataset.view;
+      switchView(view);
+      if (view === 'timeline') renderTimeline(document.getElementById('timeline-container'), state.db);
+    });
   });
 }
 
@@ -91,7 +95,7 @@ async function init() {
   }
 
   bindDateNav();
-  bindCopyFromDate();
+  bindNav();
   bindCopyAppUrl();
   bindFormChange(saveCurrentForm);
   await loadDate(state.date);
