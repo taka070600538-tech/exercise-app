@@ -1,0 +1,7 @@
+{
+  "name": "exercise-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "毎日の筋トレ・ジョギング・握力を記録するPWA(app-syncでGitHub自動バックアップ)"
+}
