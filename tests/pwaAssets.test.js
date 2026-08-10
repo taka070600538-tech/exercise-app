@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8'));
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
 const swSource = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 
 // sw.jsのASSETS配列を文字列として抜き出す(sw.jsはself前提でimportできないため)
