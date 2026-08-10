@@ -1,9 +1,10 @@
-const CACHE_NAME = 'exercise-app-v3'; // manifest変更をスマホに確実に届けるためキャッシュ更新
+// manifest.jsonはキャッシュしない: インストール判定に常に最新版を使わせるため
+// (キャッシュ優先だと、一度取り込んだ古いmanifestが更新後も配信され続ける)
+const CACHE_NAME = 'exercise-app-v4';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
-  './manifest.json',
   './js/app.js',
   './js/timeline.js',
   './js/db.js',
