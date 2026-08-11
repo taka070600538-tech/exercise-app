@@ -3,9 +3,7 @@ import { emptyRecord, buildRecord, isEmptyRecord } from './record.js';
 import { renderTimeline } from './timeline.js';
 import { readFormValues, fillForm, bindFormChange } from './form.js';
 import { formatDate, shiftDate } from './dateUtils.js';
-import { collectBackup, restoreBackup } from './backup.js';
-
-const APP_URL = 'https://taka070600538-tech.github.io/exercise-app/';
+import { collectBackup, restoreBackup, validateBackupData } from './backup.js';
 
 const state = { db: null, date: formatDate(new Date()) };
 
@@ -68,13 +66,40 @@ function bindNav() {
   });
 }
 
-function bindCopyAppUrl() {
-  document.getElementById('copy-app-url').addEventListener('click', async () => {
+function setFileMessage(text) {
+  document.getElementById('file-message').textContent = text;
+}
+
+function bindDataFile() {
+  document.getElementById('export-file').addEventListener('click', async () => {
+    const payload = await collectBackup(state.db);
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `exercise-app-backup-${formatDate(new Date())}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    setFileMessage('エクスポートしました。');
+  });
+
+  const fileInput = document.getElementById('import-file-input');
+  document.getElementById('import-file').addEventListener('click', () => {
+    fileInput.click();
+  });
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    fileInput.value = '';
+    if (!file) return;
     try {
-      await navigator.clipboard.writeText(APP_URL);
-      alert('アプリのURLをコピーしました。');
-    } catch {
-      prompt('このURLをコピーしてください:', APP_URL);
+      const data = validateBackupData(JSON.parse(await file.text()));
+      if (!confirm(`${data.records.length}件を取り込みます。現在の記録は置き換えられます。よろしいですか？`)) return;
+      await restoreBackup(state.db, data);
+      await loadDate(state.date);
+      setFileMessage(`${data.records.length}件を取り込みました。`);
+    } catch (err) {
+      console.error(err);
+      setFileMessage('ファイルの形式が正しくありません。');
     }
   });
 }
@@ -96,7 +121,7 @@ async function init() {
 
   bindDateNav();
   bindNav();
-  bindCopyAppUrl();
+  bindDataFile();
   bindFormChange(saveCurrentForm);
   await loadDate(state.date);
 

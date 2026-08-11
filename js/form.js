@@ -6,8 +6,6 @@ const NUMBER_IDS = ['situps', 'backExtensions', 'squats', 'gripReps',
 export function readFormValues() {
   const values = {};
   for (const id of NUMBER_IDS) values[id] = document.getElementById(id).value;
-  values.startTime = document.getElementById('startTime').value;
-  values.weather = document.getElementById('weather').value;
   values.memo = document.getElementById('memo').value;
   return values;
 }
@@ -31,8 +29,6 @@ export function fillForm(record) {
   setValue('pushups1', s.pushups[0]);
   setValue('pushups2', s.pushups[1]);
   setValue('pushups3', s.pushups[2]);
-  setValue('startTime', record.jogging.startTime);
-  setValue('weather', record.jogging.weather);
   setValue('distanceKm', record.jogging.distanceKm);
   setValue('durationMin', record.jogging.durationMin);
   setValue('leftKg', record.gripStrength.leftKg);

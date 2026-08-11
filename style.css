@@ -373,10 +373,14 @@ textarea {
   margin-top: 4px;
 }
 
-.app-url-row { margin-top: 12px; }
+.data-file-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
 
-#copy-app-url {
-  width: 100%;
+.data-file-row button {
+  flex: 1;
   height: 44px;
   border: 1px solid var(--line);
   border-radius: 10px;

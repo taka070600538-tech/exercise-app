@@ -26,6 +26,18 @@
   <main>
     <section class="view" id="view-record">
     <form id="record-form" autocomplete="off">
+      <section class="card card-jogging">
+        <h2>ジョギング</h2>
+        <div class="field-grid">
+          <label>距離
+            <span class="input-unit"><input type="number" id="distanceKm" min="0" step="0.1" inputmode="decimal" placeholder="0.0"><span>km</span></span>
+          </label>
+          <label>時間
+            <span class="input-unit"><input type="number" id="durationMin" min="0" inputmode="numeric" placeholder="0"><span>分</span></span>
+          </label>
+        </div>
+      </section>
+
       <section class="card card-strength">
         <h2>基本の筋力トレーニング<span class="unit-note">回数</span></h2>
         <div class="field-grid">
@@ -55,30 +67,6 @@
         </div>
       </section>
 
-      <section class="card card-jogging">
-        <h2>ジョギング</h2>
-        <div class="field-grid">
-          <label>出発時刻
-            <input type="time" id="startTime">
-          </label>
-          <label>今日の天気
-            <select id="weather">
-              <option value="">— 未選択 —</option>
-              <option value="晴れ">☀️ 晴れ</option>
-              <option value="曇り">☁️ 曇り</option>
-              <option value="雨">☔ 雨</option>
-              <option value="雪">❄️ 雪</option>
-            </select>
-          </label>
-          <label>距離
-            <span class="input-unit"><input type="number" id="distanceKm" min="0" step="0.1" inputmode="decimal" placeholder="0.0"><span>km</span></span>
-          </label>
-          <label>時間
-            <span class="input-unit"><input type="number" id="durationMin" min="0" inputmode="numeric" placeholder="0"><span>分</span></span>
-          </label>
-        </div>
-      </section>
-
       <section class="card card-grip">
         <h2>ハンドグリップ<span class="unit-note">握力測定</span></h2>
         <div class="field-grid">
@@ -104,13 +92,20 @@
 
     <section class="view hidden" id="view-settings">
       <section class="card card-settings">
-        <h2>設定</h2>
+        <h2>バックアップ</h2>
         <div id="sync-settings">
           <p class="settings-note">バックアップ機能の読み込み中です(オフライン時は利用できません)。</p>
         </div>
-        <div class="app-url-row">
-          <button id="copy-app-url" type="button">アプリのURLをコピー</button>
+      </section>
+      <section class="card card-settings">
+        <h2>インポート・エクスポート</h2>
+        <p class="settings-note">記録をJSONファイルに書き出したり、ファイルから復元したりできます。</p>
+        <div class="data-file-row">
+          <button id="export-file" type="button">ファイルにエクスポート</button>
+          <button id="import-file" type="button">ファイルからインポート</button>
         </div>
+        <input type="file" id="import-file-input" accept="application/json" hidden>
+        <p class="settings-note" id="file-message" role="status"></p>
       </section>
     </section>
   </main>
