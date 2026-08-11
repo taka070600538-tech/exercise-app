@@ -91,15 +91,15 @@
     </section>
 
     <section class="view hidden" id="view-settings">
-      <section class="card card-settings">
-        <h2>バックアップ</h2>
-        <div id="sync-settings">
-          <p class="settings-note">バックアップ機能の読み込み中です(オフライン時は利用できません)。</p>
-        </div>
+      <section class="card card-settings" id="sync-backup-section">
+        <p class="settings-note">読み込み中です...</p>
+      </section>
+      <section class="card card-settings" id="sync-token-section">
+        <p class="settings-note">読み込み中です...</p>
       </section>
       <section class="card card-settings">
         <h2>インポート・エクスポート</h2>
-        <p class="settings-note">記録をJSONファイルに書き出したり、ファイルから復元したりできます。</p>
+        <p class="settings-note">アプリのデータをJSONファイルに書き出したり、ファイルから取り込んだりできます。</p>
         <div class="data-file-row">
           <button id="export-file" type="button">ファイルにエクスポート</button>
           <button id="import-file" type="button">ファイルからインポート</button>

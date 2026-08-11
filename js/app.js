@@ -129,8 +129,9 @@ async function init() {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 
-  // 共有モジュールは動的import。オフラインやapp-sync障害時は黙ってスキップし、
-  // アプリ本体の起動を妨げない(次回オンライン起動時に再試行される)。
+  // 共有モジュールは動的import。オフラインやapp-sync障害時はアプリ本体の起動を
+  // 妨げないよう黙ってスキップし、設定タブにはフォールバック文言を表示する
+  // (次回オンライン起動時に再試行される)。
   import('https://taka070600538-tech.github.io/app-sync/v1/sync.js')
     .then((sync) => {
       sync.initDailyBackup({
@@ -138,9 +139,14 @@ async function init() {
         collect: () => collectBackup(state.db),
         restore: (data) => restoreBackup(state.db, data),
       });
-      sync.renderSyncSettings(document.getElementById('sync-settings'));
+      sync.renderBackupControls(document.getElementById('sync-backup-section'));
+      sync.renderTokenSettings(document.getElementById('sync-token-section'));
     })
-    .catch(() => {});
+    .catch(() => {
+      const message = '<p class="settings-note">GitHubバックアップ機能は現在利用できません(オフラインの可能性)。</p>';
+      document.getElementById('sync-backup-section').innerHTML = message;
+      document.getElementById('sync-token-section').innerHTML = message;
+    });
 }
 
 init();
