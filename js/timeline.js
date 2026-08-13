@@ -53,10 +53,10 @@ export function buildTimelineRows(records, today) {
   return rows;
 }
 
-const HEADERS = ['日付', '腹筋', '背筋', 'スクワット', 'グリップ', '腕立て計',
-  'km', '分', '左kg', '右kg', 'メモ'];
-const KEYS = ['date', 'situps', 'backExtensions', 'squats', 'gripReps', 'pushupTotal',
-  'distanceKm', 'durationMin', 'leftKg', 'rightKg', 'memo'];
+const HEADERS = ['日付', 'km', '分', '腕立て計', '腹筋', '背筋', 'スクワット', 'グリップ',
+  '左kg', '右kg', 'メモ'];
+const KEYS = ['date', 'distanceKm', 'durationMin', 'pushupTotal', 'situps', 'backExtensions', 'squats', 'gripReps',
+  'leftKg', 'rightKg', 'memo'];
 
 function escapeHtml(s) {
   return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
