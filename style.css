@@ -118,9 +118,9 @@ main {
   border-radius: 10px;
   background: transparent;
   color: rgba(255, 255, 255, 0.65);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   cursor: pointer;
 }
 
@@ -175,6 +175,68 @@ main {
 .timeline-table td:last-child { text-align: left; }
 
 .timeline-empty {
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* ---- 分析タブ ---- */
+.period-chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  height: 40px;
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chip.is-active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.stat-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stat-grid dt {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.stat-grid dd {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.stat-grid dd strong {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  margin-right: 2px;
+}
+
+.analysis-foot {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.analysis-empty {
   color: var(--ink-soft);
   text-align: center;
   padding: 24px 0;

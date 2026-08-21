@@ -1,11 +1,12 @@
 import { openDB, getRecord, putRecord, deleteRecord } from './db.js';
 import { emptyRecord, buildRecord, isEmptyRecord } from './record.js';
 import { renderTimeline } from './timeline.js';
+import { renderAnalysis, loadPeriod, savePeriod } from './analysis.js';
 import { readFormValues, fillForm, bindFormChange } from './form.js';
 import { formatDate, shiftDate } from './dateUtils.js';
 import { collectBackup, restoreBackup, validateBackupData } from './backup.js';
 
-const state = { db: null, date: formatDate(new Date()) };
+const state = { db: null, date: formatDate(new Date()), period: null };
 
 function setStatus(text, isError = false) {
   const el = document.getElementById('save-status');
@@ -56,12 +57,34 @@ function switchView(viewName) {
   document.getElementById('save-status').classList.toggle('hidden', !inRecord);
 }
 
+function renderAnalysisView() {
+  return renderAnalysis(document.getElementById('analysis-cards'), state.db, state.period);
+}
+
 function bindNav() {
   document.querySelectorAll('.nav-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const view = btn.dataset.view;
       switchView(view);
       if (view === 'timeline') renderTimeline(document.getElementById('timeline-container'), state.db);
+      if (view === 'analysis') renderAnalysisView();
+    });
+  });
+}
+
+function updatePeriodChips() {
+  document.querySelectorAll('.period-chips .chip').forEach((btn) => {
+    btn.classList.toggle('is-active', Number(btn.dataset.days) === state.period);
+  });
+}
+
+function bindAnalysisPeriod() {
+  document.querySelectorAll('.period-chips .chip').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.period = Number(btn.dataset.days);
+      savePeriod(state.period);
+      updatePeriodChips();
+      renderAnalysisView();
     });
   });
 }
@@ -119,8 +142,12 @@ async function init() {
     return;
   }
 
+  state.period = loadPeriod();
+  updatePeriodChips();
+
   bindDateNav();
   bindNav();
+  bindAnalysisPeriod();
   bindDataFile();
   bindFormChange(saveCurrentForm);
   await loadDate(state.date);

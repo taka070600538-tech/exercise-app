@@ -90,6 +90,16 @@
       <div id="timeline-container"></div>
     </section>
 
+    <section class="view hidden" id="view-analysis">
+      <div class="period-chips" role="group" aria-label="集計期間">
+        <button type="button" class="chip" data-days="7">7日</button>
+        <button type="button" class="chip" data-days="14">14日</button>
+        <button type="button" class="chip is-active" data-days="30">30日</button>
+        <button type="button" class="chip" data-days="90">90日</button>
+      </div>
+      <div id="analysis-cards"></div>
+    </section>
+
     <section class="view hidden" id="view-settings">
       <section class="card card-settings" id="sync-backup-section">
         <p class="settings-note">読み込み中です...</p>
@@ -113,6 +123,7 @@
   <nav class="bottom-nav">
     <button class="nav-btn is-active" data-view="record" type="button">記録</button>
     <button class="nav-btn" data-view="timeline" type="button">時系列</button>
+    <button class="nav-btn" data-view="analysis" type="button">分析</button>
     <button class="nav-btn" data-view="settings" type="button">設定</button>
   </nav>
 
