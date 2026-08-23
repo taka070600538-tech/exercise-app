@@ -1,4 +1,4 @@
-// app-dataのbackup.jsonから、01_日記の該当日ファイルへ運動記録セクションを転記する。
+// app-dataのbackup.jsonから、01_油田の該当日ファイルへ運動記録セクションを転記する。
 // AppDataGitPullタスク(app-sync/tools/app-data-pull.ps1)がpull後に実行する。
 // 使い方: node tools/transcribe-diary.mjs [backupPath] [diaryDir]
 import fs from 'node:fs';
@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url';
 const START = '<!-- exercise-app:start -->';
 const END = '<!-- exercise-app:end -->';
 const DEFAULT_BACKUP = String.raw`D:\Obsidian Vault for Claude Code\Git\app-data\exercise-app\backup.json`;
-const DEFAULT_DIARY_DIR = String.raw`D:\Obsidian Vault for Claude Code\01_日記`;
+const DEFAULT_DIARY_DIR = String.raw`D:\Obsidian Vault for Claude Code\01_油田`;
 
 const WEATHER_EMOJI = { '晴れ': '☀️', '曇り': '☁️', '雨': '☔', '雪': '❄️' };
 
@@ -78,7 +78,7 @@ function main() {
   for (const record of data.records) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(record.date)) continue;
     try {
-      const file = path.join(diaryDir, `${record.date}.md`);
+      const file = path.join(diaryDir, `スマホ - ${record.date}.md`);
       const existing = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
       fs.writeFileSync(file, upsertSection(existing, formatRecordSection(record)));
       ok++;
