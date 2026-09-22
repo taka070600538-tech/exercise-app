@@ -1,6 +1,6 @@
 // manifest(manifest.webmanifest)はキャッシュしない: インストール判定に常に最新版を使わせるため
 // (キャッシュ優先だと、一度取り込んだ古いmanifestが更新後も配信され続ける)
-const CACHE_NAME = 'exercise-app-v9';
+const CACHE_NAME = 'exercise-app-v10';
 const ASSETS = [
   './',
   './index.html',
@@ -20,7 +20,13 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+  // GitHub Pagesはmax-age=600で配信するため、通常のfetchだとブラウザのHTTPキャッシュに残った
+  // 古いJSを新しいCACHE_NAMEのキャッシュに取り込んでしまう。cache:'reload'で必ずサーバーから取得する。
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.addAll(ASSETS.map((url) => new Request(url, { cache: 'reload' })))
+    )
+  );
   self.skipWaiting();
 });
 

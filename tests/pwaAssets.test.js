@@ -77,3 +77,9 @@ test('sw.js: manifestの全アイコンがASSETSに含まれる', () => {
 test('sw.js: 共有モジュールsync.jsをキャッシュしない', () => {
   assert.ok(!swSource.includes('app-sync'), 'sw.jsのASSETSにapp-syncを含めない');
 });
+
+test('sw.js: プリキャッシュ取得はHTTPキャッシュを迂回する(cache: reload)', () => {
+  // GitHub Pagesはmax-age=600で配信するため、通常のfetchだとCACHE_NAMEを上げても
+  // ブラウザのHTTPキャッシュから古いJSを取り込んでしまうことがある。
+  assert.match(swSource, /cache:\s*['"]reload['"]/);
+});
