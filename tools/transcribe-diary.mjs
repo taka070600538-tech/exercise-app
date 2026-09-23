@@ -1,4 +1,4 @@
-// app-dataのbackup.jsonから、01_原油の該当日ファイルへ運動記録セクションを転記する。
+// app-dataのbackup.jsonから、01-NOTEの該当日ファイルへ運動記録セクションを転記する。
 // AppDataGitPullタスク(app-sync/tools/app-data-pull.ps1)がpull後に実行する。
 // 使い方: node tools/transcribe-diary.mjs [backupPath] [diaryDir]
 import fs from 'node:fs';
@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url';
 const START = '<!-- exercise-app:start -->';
 const END = '<!-- exercise-app:end -->';
 const DEFAULT_BACKUP = String.raw`D:\Obsidian Vault for Claude Code\Git\app-data\exercise-app\backup.json`;
-const DEFAULT_DIARY_DIR = String.raw`D:\Obsidian Vault for Claude Code\01_原油`;
+const DEFAULT_DIARY_DIR = String.raw`D:\Obsidian Vault for Claude Code\01-NOTE`;
 
 const WEATHER_EMOJI = { '晴れ': '☀️', '曇り': '☁️', '雨': '☔', '雪': '❄️' };
 
