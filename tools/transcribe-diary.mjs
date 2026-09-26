@@ -74,19 +74,26 @@ function main() {
     console.log('SKIP: backup.jsonの形式が不正です');
     return;
   }
-  let ok = 0;
+  let written = 0;
+  let unchanged = 0;
   for (const record of data.records) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(record.date)) continue;
     try {
       const file = path.join(diaryDir, `スマホ - ${record.date}.md`);
       const existing = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
-      fs.writeFileSync(file, upsertSection(existing, formatRecordSection(record)));
-      ok++;
+      const next = upsertSection(existing, formatRecordSection(record));
+      // 内容が同じなら書き込まない(更新日時を変えず「この日に更新したノート」に出さないため)
+      if (next === existing) {
+        unchanged++;
+        continue;
+      }
+      fs.writeFileSync(file, next);
+      written++;
     } catch (err) {
       console.log(`ERROR: ${record.date} (${err.message})`);
     }
   }
-  console.log(`OK: ${ok}件を転記しました`);
+  console.log(`OK: ${written}件を転記しました(変更なし${unchanged}件)`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
