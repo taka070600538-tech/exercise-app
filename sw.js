@@ -1,6 +1,8 @@
 // manifest(manifest.webmanifest)はキャッシュしない: インストール判定に常に最新版を使わせるため
 // (キャッシュ優先だと、一度取り込んだ古いmanifestが更新後も配信され続ける)
-const CACHE_NAME = 'exercise-app-v10';
+const CACHE_NAME = 'exercise-app-v11';
+// Cache Storage は同じオリジンの他の PWA と共有なので、片付けは自分の接頭辞の箱だけにする
+const CACHE_PREFIX = CACHE_NAME.replace(/v\d+$/, '');
 const ASSETS = [
   './',
   './index.html',
@@ -33,7 +35,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
+      Promise.all(keys.filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME).map((key) => caches.delete(key)))
     )
   );
   self.clients.claim();
